@@ -1,0 +1,76 @@
+# ==========================
+# Backend Framework
+# ==========================
+fastapi
+uvicorn[standard]
+python-multipart
+pwdlib[argon2]
+python-jose[cryptography]
+
+# ==========================
+# Database
+# ==========================
+sqlalchemy
+psycopg2-binary
+alembic
+
+# ==========================
+# Environment Variables
+# ==========================
+python-dotenv
+
+# ==========================
+# Data Processing
+# ==========================
+pandas
+numpy
+openpyxl
+
+# ==========================
+# AI / LLM
+# ==========================
+langchain
+langgraph
+langchain-google-genai
+google-generativeai
+
+# ==========================
+# SQL on DataFrames
+# ==========================
+duckdb
+
+# ==========================
+# Visualization
+# ==========================
+plotly
+
+# ==========================
+# Forecasting (Optional)
+# ==========================
+prophet
+
+# ==========================
+# PDF Report Generation
+# ==========================
+reportlab
+
+# ==========================
+# Validation
+# ==========================
+pydantic
+pydantic-settings
+
+# ==========================
+# Frontend
+# ==========================
+streamlit
+
+# ==========================
+# HTTP Requests
+# ==========================
+requests
+
+# ==========================
+# Utilities
+# ==========================
+typing-extensions

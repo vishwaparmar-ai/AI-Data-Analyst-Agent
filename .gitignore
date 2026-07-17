@@ -1,0 +1,46 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+
+# Virtual Environment
+.venv/
+venv/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Environment variables
+.env
+
+# VS Code
+.vscode/
+
+# Logs
+*.log
+
+# Database
+*.db
+
+# Alembic cache
+alembic/__pycache__/
+
+# Uploaded datasets
+uploads/
+
+# Cleaned datasets
+cleaned_datasets/
+
+# Python cache
+.pytest_cache/
+.coverage
+
+# OS files
+.DS_Store
+Thumbs.db
