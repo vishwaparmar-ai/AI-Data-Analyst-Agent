@@ -4,6 +4,7 @@ import json
 from backend.config import settings
 from backend.prompts.cleaning_prompt import build_cleaning_prompt
 from backend.prompts.business_understanding_prompt import business_understanding
+from backend.prompts.sql_prompt import build_sql_prompt
 
 
 client = genai.Client(api_key=settings.GEMINI_API_KEY)
@@ -36,6 +37,24 @@ class LLMService:
         )
 
         return json.loads(response.text)
+    
+    def generate_sql(self,schema:dict, question:str) -> str:
+        prompt = build_sql_prompt(schema=schema,question=question)
+
+        response = self.client.models.generate_content(
+        model=self.model,
+        contents=prompt
+    )
+
+        sql = response.text.strip()
+
+        sql = sql.replace("```sql", "")
+        sql = sql.replace("```", "")
+        sql = sql.strip()
+
+        return sql
+
+
 
         
         
