@@ -1,6 +1,6 @@
-from backend.agents.data_cleaning_agent import DataCleaner
+from backend.agents.data_understanding_agent import DataUnderstandingAgent
 
-cleaner = DataCleaner()
+cleaner = DataUnderstandingAgent()
 
 df = cleaner.read_dataset("uploads/ecommerce_data.csv")
 

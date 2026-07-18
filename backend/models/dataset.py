@@ -16,6 +16,7 @@ class Dataset(Base):
     dataset_metadata = Column(JSON)
     cleaned_filepath = Column(String)
     cleaning_summary = Column(JSON)
+    business_summary = Column(JSON)
     uploaded_at = Column(
     DateTime(timezone=True),
     server_default=func.now()

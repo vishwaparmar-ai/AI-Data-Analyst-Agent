@@ -3,18 +3,40 @@ import os
 import json
 from backend.config import settings
 from backend.prompts.cleaning_prompt import build_cleaning_prompt
+from backend.prompts.business_understanding_prompt import business_understanding
 
 
 client = genai.Client(api_key=settings.GEMINI_API_KEY)
 
 class LLMService:
+
+    def __init__(self):
+        self.client = genai.Client(api_key=settings.GEMINI_API_KEY)
+        self.model = "gemini-3.5-flash"
+
+
     def generate_cleaning_plan(self,report:dict):
         prompt = build_cleaning_prompt(report)
 
         response = client.models.generate_content(
-            model="gemini-3.5-flash",
+            model=self.model,
             contents=prompt,
         )
 
 
         return json.loads(response.text)
+
+    def generate_business_summary(self,business_report:dict):
+        prompt = business_understanding(business_report)
+
+        response = client.models.generate_content(
+            model=self.model,
+            contents=prompt
+
+        )
+
+        return json.loads(response.text)
+
+        
+        
+
