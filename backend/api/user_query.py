@@ -50,6 +50,5 @@ async def query_dataset(req:QueryRequest, current_user: User = Depends(get_curre
     return {
         "dataset_id": dataset.id,
         "question": result["question"],
-        "generated_sql": result["sql_query"],
-        "results": result["result"]
+        "results": result["answer"]
     }

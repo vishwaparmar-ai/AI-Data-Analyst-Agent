@@ -35,11 +35,16 @@ class SQLAgent:
 
         logger.info("SQL query executed successfully.")
 
+        result_json = result_df.to_dict(orient="records")
+
+        summary = self.llm.summarize_sql_result(
+            question,
+            result_json
+        )
+
         return {
             "question": question,
-            "schema": schema,
-            "sql_query": sql_query,
-            "result": result_df.to_dict(orient="records")
+            "answer": summary,
         }
 
 

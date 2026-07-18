@@ -5,6 +5,7 @@ from backend.config import settings
 from backend.prompts.cleaning_prompt import build_cleaning_prompt
 from backend.prompts.business_understanding_prompt import business_understanding
 from backend.prompts.sql_prompt import build_sql_prompt
+from backend.prompts.sql_summary_prompt import build_sql_summary_prompt
 
 
 client = genai.Client(api_key=settings.GEMINI_API_KEY)
@@ -53,6 +54,20 @@ class LLMService:
         sql = sql.strip()
 
         return sql
+    
+    def summarize_sql_result(self, question: str, results: list) -> str:
+
+        prompt = build_sql_summary_prompt(
+            question,
+            results
+        )
+
+        response = self.client.models.generate_content(
+        model=self.model,
+        contents=prompt
+    )
+        
+        return response.text
 
 
 
