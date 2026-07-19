@@ -14,6 +14,7 @@ class Dataset(Base):
     total_rows = Column(Integer)
     total_columns = Column(Integer)
     dataset_metadata = Column(JSON)
+    dataset_type = Column(String)
     cleaned_filepath = Column(String)
     cleaning_summary = Column(JSON)
     business_summary = Column(JSON)

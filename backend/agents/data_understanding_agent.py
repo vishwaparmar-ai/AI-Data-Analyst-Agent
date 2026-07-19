@@ -27,22 +27,9 @@ class DataUnderstandingAgent:
 
         return {
             "report": report,
+            "business_type": business_summary["business_type"],
             "business_summary": business_summary
+            
         }
 
 
-if __name__ == "__main__":
-
-    agent = DataUnderstandingAgent()
-
-    result = agent.run("uploads/ecommerce_data.csv")
-
-    logger.info("=" * 60)
-    logger.info("DATASET REPORT")
-    logger.info("=" * 60)
-    logger.info(result["report"])
-
-    logger.info("=" * 60)
-    logger.info("BUSINESS SUMMARY")
-    logger.info("=" * 60)
-    logger.info(result["business_summary"])

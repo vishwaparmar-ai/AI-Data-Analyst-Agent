@@ -63,23 +63,3 @@ class DataCleaningAgent:
         }
 
 
-if __name__ == "__main__":
-
-    agent = DataCleaningAgent()
-
-    result = agent.run("uploads/ecommerce_data.csv")
-
-    logger.info("=" * 60)
-    logger.info("DATASET REPORT")
-    logger.info("=" * 60)
-    logger.info(result["report"])
-
-    logger.info("=" * 60)
-    logger.info("CLEANING PLAN")
-    logger.info("=" * 60)
-    logger.info(result["cleaning_plan"])
-
-    logger.info("=" * 60)
-    logger.info("CLEANED DATASET")
-    logger.info("=" * 60)
-    logger.info(result["cleaned_dataset_path"])

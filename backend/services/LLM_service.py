@@ -7,6 +7,7 @@ from backend.prompts.business_understanding_prompt import business_understanding
 from backend.prompts.sql_prompt import build_sql_prompt
 from backend.prompts.sql_summary_prompt import build_sql_summary_prompt
 from backend.prompts.visualization_prompt import build_visualization_prompt
+from backend.prompts.insight_prompt import build_insight_prompt
 
 
 client = genai.Client(api_key=settings.GEMINI_API_KEY)
@@ -105,9 +106,59 @@ class LLMService:
             raise ValueError(
                 f"Invalid JSON returned by Gemini:\n{text}"
             ) from e
+    
+
+    from backend.prompts.insight_prompt import build_insight_prompt
 
 
+    def generate_insights(
+        self,
+        dataset_type: str,
+        business_summary: str,
+        dataset_profile: dict
+    ) -> dict:
+        """
+        Generate business insights using Gemini.
+        """
 
-            
-            
+        prompt = build_insight_prompt(
+            dataset_type=dataset_type,
+            business_summary=business_summary,
+            dataset_profile=dataset_profile
+        )
+
+        response = self.client.models.generate_content(
+            model=self.model,
+            contents=prompt
+        )
+
+        response_text = response.text.strip()
+
+        # Remove markdown if Gemini returns it
+        response_text = (
+            response_text
+            .replace("```json", "")
+            .replace("```", "")
+            .strip()
+        )
+
+        try:
+            return json.loads(response_text)
+
+        except Exception:
+
+            return {
+                "executive_summary": "Unable to generate insights.",
+
+                "insights": [
+                    response_text
+                ],
+
+
+                "recommendations": []
+            }
+
+
+                
+                
 

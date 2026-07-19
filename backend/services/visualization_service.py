@@ -34,9 +34,7 @@ class VisualizationService:
         else:
             raise ValueError(f"Unsupported chart type: {chart_type}")
 
-    ####################################################################
-    # BAR CHART
-    ####################################################################
+
 
     def create_bar_chart(
         self,
@@ -53,9 +51,7 @@ class VisualizationService:
             text_auto=True
         )
 
-    ####################################################################
-    # LINE CHART
-    ####################################################################
+ 
 
     def create_line_chart(
         self,
@@ -72,9 +68,6 @@ class VisualizationService:
             markers=True
         )
 
-    ####################################################################
-    # PIE CHART
-    ####################################################################
 
     def create_pie_chart(
         self,
@@ -90,9 +83,7 @@ class VisualizationService:
             title=title
         )
 
-    ####################################################################
-    # HISTOGRAM
-    ####################################################################
+  
 
     def create_histogram(
         self,
@@ -107,9 +98,6 @@ class VisualizationService:
             title=title
         )
 
-    ####################################################################
-    # SCATTER PLOT
-    ####################################################################
 
     def create_scatter_chart(
         self,
@@ -125,9 +113,7 @@ class VisualizationService:
             title=title
         )
 
-    ####################################################################
-    # SAVE CHART
-    ####################################################################
+  
 
     def save_chart(
         self,

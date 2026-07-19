@@ -44,7 +44,7 @@ async def upload_file(
 
     understanding_agent = DataUnderstandingAgent()
 
-    business_result = understanding_agent.run(file_path)
+    business_result = understanding_agent.run(result["cleaned_dataset_path"])
 
     # Save dataset information
     dataset = Dataset(
@@ -57,6 +57,7 @@ async def upload_file(
         total_rows=result["report"]["rows"],
         total_columns=result["report"]["columns"],
         dataset_metadata=result["report"],
+        dataset_type=business_result["business_type"],
         cleaning_summary=result["cleaned_summary"],
         business_summary=business_result["business_summary"]
     )

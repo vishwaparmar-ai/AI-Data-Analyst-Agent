@@ -55,27 +55,3 @@ class SQLAgent:
         }
 
 
-if __name__ == "__main__":
-
-    agent = SQLAgent()
-
-    result = agent.run(
-        file_path="cleaned_datasets/cleaned_ecommerce_data.csv",
-        question="Which payment method generated the highest revenue?"
-    )
-
-    logger.info("=" * 60)
-    logger.info("QUESTION")
-    logger.info(result["question"])
-
-    logger.info("=" * 60)
-    logger.info("SQL QUERY")
-    logger.info(result["sql_query"])
-
-    logger.info("=" * 60)
-    logger.info("ANSWER")
-    logger.info(result["answer"])
-
-    logger.info("=" * 60)
-    logger.info("RESULT")
-    logger.info(result["result"])
