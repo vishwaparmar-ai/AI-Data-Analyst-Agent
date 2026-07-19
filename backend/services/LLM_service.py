@@ -6,6 +6,7 @@ from backend.prompts.cleaning_prompt import build_cleaning_prompt
 from backend.prompts.business_understanding_prompt import business_understanding
 from backend.prompts.sql_prompt import build_sql_prompt
 from backend.prompts.sql_summary_prompt import build_sql_summary_prompt
+from backend.prompts.visualization_prompt import build_visualization_prompt
 
 
 client = genai.Client(api_key=settings.GEMINI_API_KEY)
@@ -68,9 +69,45 @@ class LLMService:
     )
         
         return response.text
+    
+    def generate_visualization_plan(self, question: str, dataframe: object) -> dict:
+        """
+        Generate a visualization plan from the SQL result.
+
+        Returns:
+        {
+            "chart_type": "bar",
+            "x_column": "category",
+            "y_column": "revenue",
+            "title": "Revenue by Category"
+        }
+        """
+
+        prompt = build_visualization_prompt(
+            question=question,
+            dataframe=dataframe
+        )
+
+        response = self.client.models.generate_content(
+            model=self.model,
+            contents=prompt
+        )
+
+        text = response.text.strip()
+
+        # Remove markdown if Gemini returns it
+        text = text.replace("```json", "").replace("```", "").strip()
+
+        try:
+            return json.loads(text)
+
+        except json.JSONDecodeError as e:
+            raise ValueError(
+                f"Invalid JSON returned by Gemini:\n{text}"
+            ) from e
 
 
 
-        
-        
+            
+            
 

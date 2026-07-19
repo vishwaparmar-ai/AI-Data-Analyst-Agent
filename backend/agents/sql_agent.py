@@ -26,6 +26,8 @@ class SQLAgent:
             question=question
         )
 
+        logger.info(f"Generated SQL:\n{sql_query}")
+
         logger.info("Executing SQL query...")
 
         result_df = self.executor.execute_query(
@@ -37,14 +39,19 @@ class SQLAgent:
 
         result_json = result_df.to_dict(orient="records")
 
+        logger.info("Generating natural language answer...")
+
         summary = self.llm.summarize_sql_result(
-            question,
-            result_json
+            question=question,
+            results=result_json
         )
 
         return {
             "question": question,
             "answer": summary,
+            "sql_query": sql_query,
+            "result": result_json,
+            "dataframe": result_df
         }
 
 
@@ -62,8 +69,12 @@ if __name__ == "__main__":
     logger.info(result["question"])
 
     logger.info("=" * 60)
-    logger.info("GENERATED SQL")
+    logger.info("SQL QUERY")
     logger.info(result["sql_query"])
+
+    logger.info("=" * 60)
+    logger.info("ANSWER")
+    logger.info(result["answer"])
 
     logger.info("=" * 60)
     logger.info("RESULT")
