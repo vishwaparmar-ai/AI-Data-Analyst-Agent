@@ -68,5 +68,8 @@ async def upload_file(
 
     return {
         "message": "Dataset uploaded ,cleaned and generated business summary successfully.",
+        "dataset_id": dataset.id,
+        "dataset_name": dataset.file_name,
+        "dataset_type": dataset.dataset_type
             }
 
