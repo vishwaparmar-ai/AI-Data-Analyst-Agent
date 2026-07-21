@@ -7,7 +7,11 @@ class DatasetAnalyzer:
     def read_dataset(self, file_path: str) -> pd.DataFrame:
 
         if file_path.endswith(".csv"):
-            df = pd.read_csv(file_path)
+            df = pd.read_csv(
+                file_path,
+                engine="python",
+                on_bad_lines="skip"
+            )
 
         elif file_path.endswith((".xlsx", ".xls")):
             df = pd.read_excel(file_path)

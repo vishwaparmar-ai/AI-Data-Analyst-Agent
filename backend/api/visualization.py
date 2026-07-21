@@ -63,6 +63,8 @@ async def generate_visualization(
         dataframe=dataframe
     )
 
+    
+
     return {
         "dataset_id": dataset.id,
         "question": req.question,

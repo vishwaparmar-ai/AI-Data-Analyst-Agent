@@ -5,6 +5,7 @@ from pages.register import register_screen
 from pages.dashboard import dashboard_screen
 from pages.upload import upload_screen
 from pages.chat import chat_screen
+from pages.visualization import visualization_screen
 
 
 st.set_page_config(
@@ -52,6 +53,7 @@ if "token" not in st.session_state:
     st.session_state.token = None
 
 
+
 # Routing
 
 if not st.session_state.logged_in:
@@ -72,3 +74,7 @@ else:
         upload_screen()
     if st.session_state.page == "chat":
         chat_screen()
+
+        st.write("Current Page:", st.session_state.page)
+    if st.session_state.page == "visualization":
+        visualization_screen()

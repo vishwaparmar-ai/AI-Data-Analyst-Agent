@@ -1,8 +1,11 @@
 import streamlit as st
+
 from services.query import query_dataset
 
 
 def chat_screen():
+
+    # ---------------- CSS ---------------- #
 
     st.markdown("""
     <style>
@@ -32,7 +35,18 @@ def chat_screen():
     </style>
     """, unsafe_allow_html=True)
 
-    # ---------- Dataset Info ----------
+    # ---------------- Session ---------------- #
+
+    if "messages" not in st.session_state:
+        st.session_state.messages = []
+
+    if "show_actions" not in st.session_state:
+        st.session_state.show_actions = False
+
+    if "last_question" not in st.session_state:
+        st.session_state.last_question = ""
+
+    # ---------------- Dataset Card ---------------- #
 
     st.markdown(
         f"""
@@ -40,19 +54,16 @@ def chat_screen():
 
         <h3>Current Dataset</h3>
 
-        <p><b>Name:</b> {st.session_state.dataset_name}</p>
+        <p><b>Name:</b> {st.session_state.get("dataset_name","")}</p>
 
-        <p><b>Business Type:</b> {st.session_state.dataset_type}</p>
+        <p><b>Business Type:</b> {st.session_state.get("dataset_type","")}</p>
 
         </div>
         """,
         unsafe_allow_html=True
     )
 
-    # ---------- Chat History ----------
-
-    if "messages" not in st.session_state:
-        st.session_state.messages = []
+    # ---------------- Welcome Message ---------------- #
 
     if len(st.session_state.messages) == 0:
 
@@ -61,11 +72,11 @@ def chat_screen():
                 "role": "assistant",
                 "content":
                 "Dataset uploaded successfully.\n\n"
-                "I'm ready to answer questions about your data."
+                "Ask me anything about your data."
             }
         )
 
-    # ---------- Display Messages ----------
+    # ---------------- Display Chat ---------------- #
 
     for message in st.session_state.messages:
 
@@ -73,7 +84,7 @@ def chat_screen():
 
             st.markdown(message["content"])
 
-    # ---------- Chat Input ----------
+    # ---------------- User Question ---------------- #
 
     question = st.chat_input(
         "Ask anything about your dataset..."
@@ -81,10 +92,12 @@ def chat_screen():
 
     if question:
 
+        st.session_state.last_question = question
+
         st.session_state.messages.append(
             {
-                "role":"user",
-                "content":question
+                "role": "user",
+                "content": question
             }
         )
 
@@ -106,54 +119,61 @@ def chat_screen():
 
                 data = response.json()
 
+                # Change this key if your backend returns something different
                 answer = data["results"]
 
                 st.markdown(answer)
 
                 st.session_state.messages.append(
                     {
-                        "role":"assistant",
-                        "content":answer
+                        "role": "assistant",
+                        "content": answer
                     }
                 )
 
-                st.write("")
-
-                col1,col2,col3 = st.columns(3)
-
-                with col1:
-
-                    if st.button(
-                        "📊 Visualization",
-                        key=f"chart_{len(st.session_state.messages)}"
-                    ):
-
-                        st.session_state.page="visualization"
-
-                        st.rerun()
-
-                with col2:
-
-                    if st.button(
-                        "💡 Insights",
-                        key=f"insight_{len(st.session_state.messages)}"
-                    ):
-
-                        st.session_state.page="insights"
-
-                        st.rerun()
-
-                with col3:
-
-                    if st.button(
-                        "📄 Download Report",
-                        key=f"report_{len(st.session_state.messages)}"
-                    ):
-
-                        st.session_state.page="report"
-
-                        st.rerun()
+                st.session_state.show_actions = True
 
             else:
 
                 st.error(response.text)
+
+    # ---------------- Action Buttons ---------------- #
+
+    if st.session_state.show_actions:
+
+        st.divider()
+
+        col1, col2, col3 = st.columns(3)
+
+        with col1:
+
+            if st.button(
+                "📊 Visualization",
+                use_container_width=True
+            ):
+
+                st.session_state.page = "visualization"
+
+                st.rerun()
+
+        with col2:
+
+            if st.button(
+                "💡 Insights",
+                use_container_width=True
+            ):
+
+                st.session_state.page = "insights"
+
+                st.rerun()
+
+        with col3:
+
+            if st.button(
+                "📄 Download Report",
+                use_container_width=True
+            ):
+
+                st.session_state.page = "report"
+
+                st.rerun()
