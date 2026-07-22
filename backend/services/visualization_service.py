@@ -11,6 +11,11 @@ class VisualizationService:
     def generate_chart(self, df: pd.DataFrame, plan: dict):
 
         chart_type = plan.get("chart_type")
+
+
+        if chart_type == "table":
+            chart_type = "bar"
+            
         title = plan.get("title", "Visualization")
 
         if chart_type == "bar":
@@ -28,8 +33,6 @@ class VisualizationService:
         elif chart_type == "scatter":
             return self.create_scatter_chart(df, plan, title)
 
-        elif chart_type == "table":
-            return None
 
         else:
             raise ValueError(f"Unsupported chart type: {chart_type}")

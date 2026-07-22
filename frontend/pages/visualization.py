@@ -2,7 +2,6 @@ import streamlit as st
 
 from services.visualization import generate_visualization
 
-
 BASE_URL = "http://127.0.0.1:8000"
 
 
@@ -24,12 +23,11 @@ def visualization_screen():
         use_container_width=True
     ):
 
-        if question == "":
+        if not question.strip():
 
             st.warning(
                 "Please enter a visualization request."
             )
-
             st.stop()
 
         with st.spinner("Generating visualization..."):
@@ -43,34 +41,32 @@ def visualization_screen():
         if response.status_code != 200:
 
             st.error(response.text)
-
             st.stop()
 
         data = response.json()
 
         st.success("Visualization generated successfully.")
 
-        st.subheader("Chart Description")
+        # ---------------- Chart Title ---------------- #
 
-        st.write(data["chart_plan"])
+        st.markdown(
+            f"### {data['chart_plan']['title']}"
+        )
 
-        chart_path = data["chart_path"]
+        # ---------------- Chart Image ---------------- #
+
+        chart_path = data["chart_path"].replace("\\", "/")
 
         image_url = f"{BASE_URL}/{chart_path}"
 
-        st.write(image_url)      # temporary for debugging
+        col1, col2, col3 = st.columns([1, 4, 1])
 
-        st.image(
-            image_url,
-            caption="Generated Visualization",
-            use_container_width=True
-        )
+        with col2:
 
-        st.image(
-            image_url,
-            caption="Generated Visualization",
-            use_container_width=True
-        )
+            st.image(
+                image_url,
+                width=960
+            )
 
     st.write("")
 

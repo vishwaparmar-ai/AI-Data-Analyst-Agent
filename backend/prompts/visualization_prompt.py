@@ -35,7 +35,6 @@ Choose ONLY ONE chart from the following:
 - pie
 - histogram
 - scatter
-- table
 
 Guidelines:
 
